@@ -16,31 +16,34 @@ def get_file_list(dir, file_list):
 
 # 获取文件名标出的创建时间
 def get_file_time(file_name):
-    # re.findall() https://blog.csdn.net/weixin_44799217/article/details/122069533
-    time_str = re.findall(r'IMG\d{14}', file_name)
-    if time_str:
-        time_str = time_str[0]
-        time_str = time_str[:8] + ' ' + time_str[8:]
-        time_str = time_str[:4] + '-' + time_str[4:6] + '-' + time_str[6:]
-        time_tuple = datetime.strptime(time_str, '%Y-%m-%d %H%M%S')
-        return time_tuple
-    
-    time_str = re.findall(r'\d{4}-\d{2}-\d{2}\s\d{6}', file_name)
-    if time_str:
-        time_str = time_str[0]
-        time_str = time_str.replace('-', '')
-        time_str = time_str[:4] + '-' + time_str[4:6] + '-' + time_str[6:]
-        time_tuple = datetime.strptime(time_str, '%Y-%m-%d %H%M%S')
-        return time_tuple
+    try:
+        # re.findall() https://blog.csdn.net/weixin_44799217/article/details/122069533
+        time_str = re.findall(r'IMG\d{14}', file_name)
+        if time_str:
+            time_str = time_str[0]
+            time_str = time_str[:8] + ' ' + time_str[8:]
+            time_str = time_str[:4] + '-' + time_str[4:6] + '-' + time_str[6:]
+            time_tuple = datetime.strptime(time_str, '%Y-%m-%d %H%M%S')
+            return time_tuple
+        
+        time_str = re.findall(r'\d{4}-\d{2}-\d{2}\s\d{6}', file_name)
+        if time_str:
+            time_str = time_str[0]
+            time_str = time_str.replace('-', '')
+            time_str = time_str[:4] + '-' + time_str[4:6] + '-' + time_str[6:]
+            time_tuple = datetime.strptime(time_str, '%Y-%m-%d %H%M%S')
+            return time_tuple
 
-    time_str = re.findall(r'\d{8}_\d{6}', file_name)
-    if time_str:
-        time_str = time_str[0]
-        time_str = time_str.replace('_', ' ')
-        time_str = time_str[:4] + '-' + time_str[4:6] + '-' + time_str[6:]
-        time_tuple = datetime.strptime(time_str, '%Y-%m-%d %H%M%S')
-        return time_tuple
-    else:
+        time_str = re.findall(r'\d{8}_\d{6}', file_name)
+        if time_str:
+            time_str = time_str[0]
+            time_str = time_str.replace('_', ' ')
+            time_str = time_str[:4] + '-' + time_str[4:6] + '-' + time_str[6:]
+            time_tuple = datetime.strptime(time_str, '%Y-%m-%d %H%M%S')
+            return time_tuple
+        else:
+            return None
+    except:
         return None
 
 # 设置文件的创建时间
